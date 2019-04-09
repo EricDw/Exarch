@@ -1,0 +1,4 @@
+rootProject.name = 'Exarch'
+include 'Core'
+findProject(':Core')?.name = 'Exarch'
+
