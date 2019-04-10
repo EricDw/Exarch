@@ -1,3 +1,5 @@
 package view
 
-interface ViewController<S: ViewState>: ViewStateHandler<S>
+interface ViewController<S: ViewState>: ViewStateHandler<S> {
+    
+}
