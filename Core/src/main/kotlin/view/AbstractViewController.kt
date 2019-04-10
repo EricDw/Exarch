@@ -8,5 +8,4 @@ abstract class AbstractViewController(
 ) : StateHandler<ViewState>
 {
     constructor(vararg views: View<Command, ViewState>) : this(views.toMutableList())
-
 }
