@@ -4,8 +4,8 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
-internal object SetSpek : Spek({
-    Feature("Set") {
+internal object SpekRunsSpek : Spek({
+    Feature("Using Spek to manipulate a Set<Int> as proof it runs") {
         val set by memoized { mutableSetOf<String>() }
 
         Scenario("adding items") {
