@@ -2,7 +2,7 @@
 <html xmlns:str="http://exslt.org/strings" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Test Results &mdash; AbstractViewControllerSpek</title>
+<title>Test Results &mdash; SSTExampleSpek</title>
 <style type="text/css">
           html {
             height: 100%
@@ -572,8 +572,8 @@ jQuery.cookie = function(name, value, options) {
 <body>
 <div id="container">
 <div id="header">
-<div class="time" xmlns="">77 ms</div>
-<h1>AbstractViewControllerSpek: <strong><span class="total" xmlns="http://www.w3.org/1999/xhtml">9 total, </span><span class="passed">9 passed</span></strong>
+<div class="time" xmlns="">114 ms</div>
+<h1>SSTExampleSpek: <strong><span class="total" xmlns="http://www.w3.org/1999/xhtml">11 total, </span><span class="passed">11 passed</span></strong>
 </h1>
 <div id="treecontrol">
 <ul>
@@ -591,77 +591,80 @@ jQuery.cookie = function(name, value, options) {
 <ul id="tree">
 <li xmlns="" class="level top open">
 <span><em class="time">
-<div class="time">77 ms</div>
-</em>AbstractViewControllerSpek</span>
+<div class="time">114 ms</div>
+</em>SSTExampleSpek</span>
 <ul>
 <li class="level suite open">
 <span><em class="time">
-<div class="time">77 ms</div>
-</em>Feature: AbstractViewController</span>
+<div class="time">114 ms</div>
+</em>Feature: Signal State Transformation Pattern</span>
 <ul>
 <li class="level suite open">
 <span><em class="time">
-<div class="time">54 ms</div>
-</em>Scenario: Instantiating with empty constructor</span>
+<div class="time">106 ms</div>
+</em>Scenario: Emitting a UserSignal after binding the components</span>
 <ul>
-<li class="level test">
-<span><em class="time">
-<div class="time">42 ms</div>
-</em><em class="status">passed</em>When: Calling handleState of nothing</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">12 ms</div>
-</em><em class="status">passed</em>Then: Actual is 0</span>
-</li>
-</ul>
-</li>
-<li class="level suite open">
-<span><em class="time">
-<div class="time">15 ms</div>
-</em>Scenario: Instantiating with 1 view</span>
-<ul>
-<li class="level test">
-<span><em class="time">
-<div class="time">9 ms</div>
-</em><em class="status">passed</em>Given: View that increases actual by 1</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">4 ms</div>
-</em><em class="status">passed</em>When: Calling viewController.handleState</span>
-</li>
 <li class="level test">
 <span><em class="time">
 <div class="time">2 ms</div>
-</em><em class="status">passed</em>Then: Actual is 1</span>
+</em><em class="status">passed</em>Given: An ExampleInterpreter</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">1 ms</div>
+</em><em class="status">passed</em>And: An ExampleProcessor</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">0 ms</div>
+</em><em class="status">passed</em>And: An ExampleReducer</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">1 ms</div>
+</em><em class="status">passed</em>And: An ExampleStateExecutor</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">1 ms</div>
+</em><em class="status">passed</em>And: SignalStateTransformationExecutor of components</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">91 ms</div>
+</em><em class="status">passed</em>When: Binding all the given components to users signals</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">5 ms</div>
+</em><em class="status">passed</em>And: Sending a user signal into the system</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">5 ms</div>
+</em><em class="status">passed</em>Then: 1 is output by the StateExecutor</span>
 </li>
 </ul>
 </li>
 <li class="level suite open">
 <span><em class="time">
 <div class="time">8 ms</div>
-</em>Scenario: Instantiating with 2 views</span>
+</em>Scenario: Emitting Multiple UserSignals into the pipeline</span>
 <ul>
 <li class="level test">
 <span><em class="time">
 <div class="time">3 ms</div>
-</em><em class="status">passed</em>Given: View1 increases actual by 1</span>
+</em><em class="status">passed</em>Given: Pipeline is bound to the users signals</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">2 ms</div>
-</em><em class="status">passed</em>And: View2 increases actual by 2</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">2 ms</div>
-</em><em class="status">passed</em>When: Calling viewController.handleState</span>
+<div class="time">4 ms</div>
+</em><em class="status">passed</em>When: Sending 5 user signals into the pipeline</span>
 </li>
 <li class="level test">
 <span><em class="time">
 <div class="time">1 ms</div>
-</em><em class="status">passed</em>Then: Actual is 3</span>
+</em><em class="status">passed</em>Then: 5 signals are output by the StateExecutor</span>
 </li>
 </ul>
 </li>
@@ -673,7 +676,7 @@ jQuery.cookie = function(name, value, options) {
 </div>
 </div>
 <div id="footer">
-<p>Generated by IntelliJ IDEA on 10/04/19 5:24 PM</p>
+<p>Generated by IntelliJ IDEA on 13/04/19 2:57 PM</p>
 </div>
 </body>
 </html>

@@ -1,3 +1,7 @@
 package state
 
-interface State
+import command.Command
+
+interface State {
+    fun observe(command: Command)
+}
