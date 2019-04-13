@@ -1,9 +1,9 @@
 package sst.transformers
 
 import signal.AbstractSignalTransformer
-import sst.transformers.signals.ActionSignal
-import sst.transformers.signals.UserSignal
+import sst.signals.ActionSignal
+import sst.signals.UserSignal
 
 abstract class AbstractInterpreter<A : UserSignal, B : ActionSignal>(
-    transform: (A) -> B
-) : AbstractSignalTransformer<A, B>(transform)
+    override val transform: (A) -> B
+) : AbstractSignalTransformer<A, B>()

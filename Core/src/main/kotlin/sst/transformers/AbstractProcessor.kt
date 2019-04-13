@@ -1,9 +1,9 @@
 package sst.transformers
 
 import signal.AbstractSignalTransformer
-import sst.transformers.signals.ActionSignal
-import sst.transformers.signals.ResultSignal
+import sst.signals.ActionSignal
+import sst.signals.ResultSignal
 
 abstract class AbstractProcessor<A : ActionSignal, B : ResultSignal>(
-    transform: (A) -> B
-) : AbstractSignalTransformer<A, B>(transform)
+    override val transform: (A) -> B
+) : AbstractSignalTransformer<A, B>()

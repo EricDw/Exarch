@@ -1,4 +1,4 @@
-package sst.transformers.signals
+package sst.signals
 
 import signal.Signal
 

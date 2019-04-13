@@ -4,10 +4,9 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
 
-abstract class AbstractSignalTransformer<A : Signal, B : Signal>(
-    protected val transform: (A) -> B
-) : SignalTransformer<A, B>
+abstract class AbstractSignalTransformer<A : Signal, B : Signal> : SignalTransformer<A, B>
 {
+    protected abstract val transform: (A) -> B
 
     private val outChannel = Channel<B>(Channel.UNLIMITED)
 

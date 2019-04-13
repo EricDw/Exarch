@@ -7,5 +7,6 @@ class ExampleAbstractReducer
     : AbstractReducer<
         ExampleResultSignal,
         ExampleStateSignal>(
-    { ExampleStateSignal }
+    ExampleStateSignal,
+    { _, _ -> ExampleStateSignal }
 )

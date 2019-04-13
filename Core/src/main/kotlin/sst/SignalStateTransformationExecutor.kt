@@ -1,15 +1,14 @@
 package sst
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.broadcast
 import signal.SignalExecutor
 import signal.SignalTransformer
-import sst.transformers.signals.ActionSignal
-import sst.transformers.signals.ResultSignal
-import sst.transformers.signals.StateSignal
-import sst.transformers.signals.UserSignal
+import sst.signals.ActionSignal
+import sst.signals.ResultSignal
+import sst.signals.StateSignal
+import sst.signals.UserSignal
 
 class SignalStateTransformationExecutor<
         US : UserSignal,
