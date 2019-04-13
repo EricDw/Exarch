@@ -4,8 +4,7 @@ plugins {
     kotlin("jvm") version "1.3.30"
 }
 
-group = "net.publicmethod"
-version = "0.0.1-ALPHA"
+version = "unspecified"
 
 repositories {
     jcenter()
@@ -16,7 +15,8 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0")
-    
+    implementation(project(":Exarch"))
+
     // Testing
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.3.20")
     testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.1.0-alpha.0.5+1e19e95")
@@ -32,5 +32,3 @@ tasks.withType<Test> {
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
-
-

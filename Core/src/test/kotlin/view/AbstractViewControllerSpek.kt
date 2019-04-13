@@ -1,8 +1,7 @@
 package view
 
 import command.Command
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.ReceiveChannel
+import command.CommandHandler
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import kotlin.test.assertEquals
@@ -25,7 +24,12 @@ internal object AbstractViewControllerSpek : Spek({
             When("Calling handleState of nothing") {
                 viewController.handleState(
                     object : ViewState
-                    {}
+                    {
+                        override fun observe(command: Command)
+                        {
+                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                        }
+                    }
                 )
             }
 
@@ -43,8 +47,10 @@ internal object AbstractViewControllerSpek : Spek({
             Given("View that increases actual by 1") {
                 view1 = object : View<Command, ViewState>
                 {
-                    override val commands: ReceiveChannel<Command> =
-                        Channel()
+                    override var commandHandler: CommandHandler<Command> =
+                        CommandHandler.skeleton {
+                            actual++
+                        }
 
                     override fun handleState(state: ViewState)
                     {
@@ -66,7 +72,12 @@ internal object AbstractViewControllerSpek : Spek({
             When("Calling viewController.handleState") {
                 viewController.handleState(
                     object : ViewState
-                    {}
+                    {
+                        override fun observe(command: Command)
+                        {
+                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                        }
+                    }
                 )
             }
 
@@ -85,8 +96,8 @@ internal object AbstractViewControllerSpek : Spek({
             Given("View1 increases actual by 1") {
                 view1 = object : View<Command, ViewState>
                 {
-                    override val commands: ReceiveChannel<Command> =
-                        Channel()
+                    override var commandHandler: CommandHandler<Command> =
+                        CommandHandler.emptyHandler()
 
                     override fun handleState(state: ViewState)
                     {
@@ -98,8 +109,8 @@ internal object AbstractViewControllerSpek : Spek({
             And("View2 increases actual by 2") {
                 view2 = object : View<Command, ViewState>
                 {
-                    override val commands: ReceiveChannel<Command> =
-                        Channel()
+                    override var commandHandler: CommandHandler<Command> =
+                        CommandHandler.emptyHandler()
 
                     override fun handleState(state: ViewState)
                     {
@@ -121,7 +132,12 @@ internal object AbstractViewControllerSpek : Spek({
             When("Calling viewController.handleState") {
                 viewController.handleState(
                     object : ViewState
-                    {}
+                    {
+                        override fun observe(command: Command)
+                        {
+                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                        }
+                    }
                 )
             }
 

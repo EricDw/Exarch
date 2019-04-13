@@ -1,0 +1,3 @@
+package signal
+
+interface Signal
