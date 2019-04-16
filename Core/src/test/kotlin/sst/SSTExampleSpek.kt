@@ -1,7 +1,9 @@
 package sst
 
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.asFlow
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import sst.executers.AbstractStateExecutor
@@ -13,6 +15,7 @@ import sst.signals.ExampleUserSignal
 import sst.transformers.*
 import kotlin.test.assertEquals
 
+@FlowPreview
 @ExperimentalCoroutinesApi
 internal object SSTExampleSpek : Spek({
     Feature("Signal State Transformation Pattern") {
@@ -22,7 +25,8 @@ internal object SSTExampleSpek : Spek({
             val expected = 1
             var actual = 0
 
-            val userSignals: Channel<ExampleUserSignal> = Channel(Channel.UNLIMITED)
+            val userSignals: BroadcastChannel<ExampleUserSignal> =
+                BroadcastChannel(10)
 
             lateinit var interpreter: AbstractInterpreter<ExampleUserSignal, ExampleActionSignal>
 
@@ -64,7 +68,7 @@ internal object SSTExampleSpek : Spek({
 
             When("Binding all the given components to users signals") {
                 GlobalScope.launch(Dispatchers.Unconfined) {
-                    sstScope.bindTo(userSignals)
+                    sstScope.bindTo(userSignals.asFlow())
                 }
             }
 
@@ -85,7 +89,7 @@ internal object SSTExampleSpek : Spek({
             val expected = 5
             var actual = 0
 
-            val userSignals: Channel<ExampleUserSignal> = Channel(Channel.UNLIMITED)
+            val userSignals: BroadcastChannel<ExampleUserSignal> = BroadcastChannel(10)
 
             val interpreter = ExampleAbstractInterpreter()
             val processor = ExampleAbstractProcessor()
@@ -100,17 +104,15 @@ internal object SSTExampleSpek : Spek({
 
             Given("Pipeline is bound to the users signals") {
                 GlobalScope.launch(Dispatchers.Unconfined) {
-                    signalStateTransformationExecutor bindTo userSignals
+                    signalStateTransformationExecutor bindTo userSignals.asFlow()
                 }
             }
 
             When("Sending 5 user signals into the pipeline") {
                 GlobalScope.launch(Dispatchers.Unconfined) {
-                    userSignals.send(ExampleUserSignal)
-                    userSignals.send(ExampleUserSignal)
-                    userSignals.send(ExampleUserSignal)
-                    userSignals.send(ExampleUserSignal)
-                    userSignals.send(ExampleUserSignal)
+                    repeat(5) {
+                        userSignals.send(ExampleUserSignal)
+                    }
                 }
             }
 

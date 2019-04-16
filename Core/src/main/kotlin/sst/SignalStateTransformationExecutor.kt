@@ -1,8 +1,8 @@
 package sst
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.channels.broadcast
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.Flow
 import signal.SignalExecutor
 import signal.SignalTransformer
 import sst.signals.ActionSignal
@@ -21,23 +21,19 @@ class SignalStateTransformationExecutor<
     val stateExecutor: SignalExecutor<SS>
 )
 
+@FlowPreview
 @ExperimentalCoroutinesApi
 suspend infix fun <SS : StateSignal,
         US : UserSignal,
         AS : ActionSignal,
         RS : ResultSignal>
         SignalStateTransformationExecutor<US, AS, RS, SS>.bindTo(
-    userSignals: ReceiveChannel<US>
+    userSignals: Flow<US>
 ): Unit =
     stateExecutor.executeSignals(
         reducer.transformSignals(
             processor.transformSignals(
-                interpreter.transformSignals(userSignals).broadcastSubscription()
-            ).broadcastSubscription()
-        ).broadcastSubscription()
+                interpreter.transformSignals(userSignals)
+            )
+        )
     )
-
-@ExperimentalCoroutinesApi
-private fun <A> ReceiveChannel<A>.broadcastSubscription(
-    capacity: Int = 10
-): ReceiveChannel<A> = broadcast(capacity).openSubscription()

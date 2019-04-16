@@ -2,11 +2,13 @@ package sst.transformers
 
 import sst.signals.ExampleResultSignal
 import sst.signals.ExampleStateSignal
+import TestingScope
 
 class ExampleAbstractReducer
     : AbstractReducer<
         ExampleResultSignal,
         ExampleStateSignal>(
-    ExampleStateSignal,
-    { _, _ -> ExampleStateSignal }
+    coroutineScope = TestingScope,
+    initialStateSignal = ExampleStateSignal,
+    reduce = { _, _ -> ExampleStateSignal }
 )

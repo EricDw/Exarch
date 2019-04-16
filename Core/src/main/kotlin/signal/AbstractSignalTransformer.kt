@@ -1,30 +1,37 @@
 package signal
 
 import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.collect
 
-abstract class AbstractSignalTransformer<A : Signal, B : Signal> : SignalTransformer<A, B>
+abstract class AbstractSignalTransformer<A : Signal, B : Signal>(
+    backPressureCapacity: Int = 10,
+    private val coroutineScope: CoroutineScope
+) : SignalTransformer<A, B>
 {
     protected abstract val transform: (A) -> B
 
-    private val outChannel = Channel<B>(Channel.UNLIMITED)
+    @ExperimentalCoroutinesApi
+    private val outChannel =
+        BroadcastChannel<B>(backPressureCapacity)
 
     private var transformJob: Job = Job()
 
+    @FlowPreview
     @ExperimentalCoroutinesApi
     override suspend fun transformSignals(
-        inputChannel: ReceiveChannel<A>
-    ): ReceiveChannel<B>
+        inputSignals: Flow<A>
+    ): Flow<B>
     {
-        transformJob = GlobalScope.launch(Dispatchers.Unconfined) {
-            for (signal in inputChannel)
-            {
-                outChannel.send(transform(signal))
+        transformJob = coroutineScope.launch {
+            inputSignals.collect {
+                outChannel.send(transform(it))
             }
         }
 
-        return outChannel
+        return outChannel.asFlow()
     }
 
 }

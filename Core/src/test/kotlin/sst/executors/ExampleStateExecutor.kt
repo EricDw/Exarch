@@ -1,8 +1,9 @@
 package sst.executors
 
-import sst.signals.ExampleStateSignal
 import sst.executers.AbstractStateExecutor
+import sst.signals.ExampleStateSignal
+import TestingScope
 
 class ExampleStateExecutor(
     execute: (ExampleStateSignal) -> Unit
-) : AbstractStateExecutor<ExampleStateSignal>(execute)
+) : AbstractStateExecutor<ExampleStateSignal>(TestingScope, execute)

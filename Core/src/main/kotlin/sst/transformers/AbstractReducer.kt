@@ -1,14 +1,16 @@
 package sst.transformers
 
+import kotlinx.coroutines.CoroutineScope
 import signal.AbstractSignalTransformer
 import sst.signals.ResultSignal
 import sst.signals.StateSignal
-import state.State
 
 abstract class AbstractReducer<A : ResultSignal, B : StateSignal>(
+    backPressureCapacity: Int = 10,
+    coroutineScope: CoroutineScope,
     initialStateSignal: B,
     reduce: (oldStateSignal: B, resultSignal: A) -> B
-) : AbstractSignalTransformer<A, B>()
+) : AbstractSignalTransformer<A, B>(backPressureCapacity, coroutineScope)
 {
 
     private var oldState = initialStateSignal
